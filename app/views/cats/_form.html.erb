@@ -1,0 +1,58 @@
+
+<% action_url = cat.persisted? ? cat_url(cat) : cats_url%>
+
+<form action="<%=action_url%>" method="POST">
+<%if action == :edit %>
+  <input 
+    type="hidden" 
+    name="_method" 
+    value="PATCH">
+<%end%> 
+
+  <label for="name">Name</label>
+  <input  
+    id="name" 
+    type="text" 
+    name="cat[name]" 
+    value="<%=@cat.name%>"> 
+
+  <br>
+  <label for="birth_date">Birth Date</label>
+  <input 
+    id="birth_date" 
+    type="date" 
+    name="cat[birth_date]" 
+    value="<%=@cat.birth_date%>">
+
+  <br>
+    <select name="cat[color]">
+    <%Cat::CAT_COLORS.each do |color| %>
+      <option 
+      value="<%=color%>" <%= "selected" if @cat.color == color%>> <%=color%></option>
+    <%end%>
+    </select>
+  <br>
+
+  <input 
+    type="radio" 
+    name="cat[sex]" 
+    value ="M" <%="checked" if @cat.sex == 'M'%> >Male<br>
+  <input 
+    type="radio" 
+    name="cat[sex]" 
+    value ="F" <%="checked" if @cat.sex == 'F'%>>Female<br>
+
+  <label for="description">Description</label><br>
+  <textarea 
+    id="description" 
+    type="text" 
+    name="cat[description]"><%=@cat.description%></textarea>
+  <br>
+    
+  <input 
+    type = "submit" 
+    value = "<%= (action == :new) ? "Create Cat!" : "Edit Cat!"%>">
+    
+</form> 
+
+<a href="<%= cats_url %>">Home</a>
